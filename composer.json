@@ -1,5 +1,5 @@
 {
-    "name": "xmrrabbitx/nfthistorylogs",
+    "name": "nfthistory/nfthistorylogs",
     "description": "Multinetworks Ethereum Interface to manage NFT history transactions logs",
     "type": "library",
     "license": "MIT",
