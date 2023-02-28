@@ -14,7 +14,7 @@
 ## Installation 
 
 ```bash
- composer require nfthistory/nfthistorylogs
+ composer require nfthistory/nfthistorylogs dev-master
 ```
 
 ## Usage
