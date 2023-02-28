@@ -14,7 +14,7 @@
 ## Installation 
 
 ```bash
- composer require xmmrrabbitx\nfthistorylogs
+ composer require nfthistory/nfthistorylogs
 ```
 
 ## Usage
