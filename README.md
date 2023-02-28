@@ -27,7 +27,7 @@ require "vendor/autoload.php";
 use Nft\History\nftHistory;
 
 $contractAdress = "CONTRACT ADDRESS";
-$provider = "http://localhost:8545"
+$provider = "http://localhost:8545";
 
 $NftHistory = new nftHistory($contractAddress, $Provider);
 
