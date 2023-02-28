@@ -1,0 +1,196 @@
+<?php
+/**
+ * A class that provides methods to retrieve transaction history 
+ * for a given NFT contract address
+ * @package Nft\History
+*/
+namespace Nft\History;
+
+use \Exception as Exception;
+use Nft\History\Methods\Topics;
+use Nft\History\Methods\allTrx;
+use Nft\History\Methods\Transfer\transferTrxId;
+use Nft\History\Methods\Transfer\allTransferTrx;
+use Nft\History\Methods\genesisBlock;
+
+final class nftHistory{
+
+    /**
+     * @var int $tokenId the id of an nft  
+     */
+    protected $tokenId;
+
+    /**
+     * @var string $contractAddress the contract address of an nft  
+     */ 
+    protected $contractAddress;
+
+    /**
+     * @var string $provider The Ethereum node URL to connect to
+     */
+
+    /**
+     * Constructor function to set up the NFT contract address and 
+     * Ethereum node URL
+     * 
+     * @param string $contractAddress The address of the NFT contract
+     * @param string $provider The Ethereum node URL to connect to
+     */
+    function __construct($contractAddress, $provider){
+
+       if (is_string($provider) && (filter_var($provider, FILTER_VALIDATE_URL) !== false)) {
+
+            $this->contractAddress = $contractAddress;
+            $this->provider = $provider;
+
+       }
+    }
+
+    /**
+     * Method to get all transactions history of an NFT contract
+     */
+    function allTrx($fromBlock,$toBlock){
+    
+        $allTrx = new allTrx($this->contractAddress,$fromBlock,$toBlock);
+        $data = $allTrx->getAllTrx();
+
+        $result = $this->exec($data);
+        return $this->result($result);
+
+    }
+
+    /**
+    * Method to get all transfer transactions of an NFT contract
+    */
+    function allTransferTrx($fromBlock,$toBlock){
+
+        $allTransferTrx = new allTransferTrx($this->contractAddress,$fromBlock,$toBlock);
+        $data = $allTransferTrx->getTransferTrx();
+
+        $result = $this->exec($data);
+        return $this->result($result);
+
+    }
+
+    /**
+     * Method to get all transfer transaction of a specific NFT token ID
+     *
+     * @param int $tokenId The ID of the NFT token
+     */
+    function transferTrxById($tokenId,$fromBlock,$toBlock){
+
+        $transferTrxById = new transferTrxId($this->contractAddress,$fromBlock,$toBlock);
+        $data = $transferTrxById->getTransferTrxById($tokenId);
+
+        $result = $this->exec($data);
+        return $this->result($result);
+
+    }
+
+    function eventSig($eventName){
+
+        $evenSig = new Topics();
+        $result = $evenSig->eventSignature($eventName);
+
+        return $result;
+
+    }
+
+    function fromAddress($topics){
+
+        $fromAddress = new Topics();
+        $result = $fromAddress->fromAddress($topics);
+
+        return $result;
+    }
+
+    function toAddress($topics){
+
+        $toAddress = new Topics();
+        $result = $toAddress->toAddress($topics);
+
+        return $result;
+
+    }
+
+    function tokenId($topics){
+
+        $tokenId = new Topics();
+        $result = $tokenId->nftTokenId($topics);
+
+        return $result;
+
+    }
+
+    function genesisBlock(){
+
+        $genesis = new genesisBlock($this->contractAddress);
+        $data = $genesis->getGenesisBlock();
+
+        $result = $this->exec($data);
+        return $this->result($result);
+
+    }
+
+    function nftTransferWei($data){
+        
+        $amount = hexdec($data['data']);
+        return $amount;
+
+    }
+
+    /**
+     * Method to execute the JSON-RPC request and retrieve the 
+     * transaction history
+     *
+     * @throws Exception If there is an error in the JSON-RPC 
+     * response or an empty response is received
+     */
+    function exec($data){
+
+        # Set up the cURL request
+        $ch = curl_init($this->provider);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json'
+        ));
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        
+
+        $json_data = json_encode($data);
+
+        # Send the cURL request with the JSON-RPC request in the body
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            $error = curl_error($curl);
+            print_r($error);
+        }
+
+        # error checking
+        if (!empty($response)) {
+            $decoded_response = json_decode($response, true);
+            if (isset($decoded_response['error'])) {
+                throw new Exception($decoded_response['error']['message']);
+            }
+            $result = $decoded_response['result'];
+           
+        } else {
+            throw new Exception("Empty response received.");
+        }
+        
+        # Parse the response to extract the transaction history
+        $history = json_decode($response, true)['result'];
+
+        return $history;
+
+    }
+
+    function result($result){
+
+        return $result;
+
+    }
+}
