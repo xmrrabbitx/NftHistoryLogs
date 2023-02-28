@@ -71,8 +71,9 @@ $NftHistory->nftTransferWei($data);
 ### eventSig
 You could also get a 256-bit hashed event signature, such as "Transfer" or "Approval." 
 ```php
-$NftHistory->eventSig($fromBlock, $toBlock);
+$NftHistory->eventSig("Transfer");
 ```
+event name could be this 3 option as string type: "Transfer" , "Approval" and "ApprovalForAll"
 
 ### fromAddress
 if you get specific nft transaction and you want identify the sender of the transaction, you must set topics array from your desired transaction object:
