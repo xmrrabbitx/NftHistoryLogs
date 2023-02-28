@@ -29,7 +29,7 @@ use Nft\History\nftHistory;
 $contractAdress = "CONTRACT ADDRESS";
 $provider = "http://localhost:8545";
 
-$NftHistory = new nftHistory($contractAddress, $Provider);
+$NftHistory = new nftHistory($contractAddress, $provider);
 
 print_r($nfthistory);
     
