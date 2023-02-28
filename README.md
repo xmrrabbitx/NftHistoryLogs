@@ -9,7 +9,7 @@
 #### You need to run a local or remote Ethereum node to use this library.
 #### You could also use testnet like [Ganache](https://trufflesuite.com/ganache/) or [Cloudflare ETH](https://developers.cloudflare.com/web3/ethereum-gateway/) network.
 
-### You could also set any network endpoints like [Alchemy](https://www.alchemy.com/) or [Infura](https://www.infura.io/) or anything you want.
+#### You could also set any network endpoints like [Alchemy](https://www.alchemy.com/) or [Infura](https://www.infura.io/) or anything you want.
 
 ## Installation 
 
