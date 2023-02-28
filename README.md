@@ -105,7 +105,7 @@ You can test the library by using phpunit test:
 ```
 
 ### contribution
-If you interested in contribute in this project, I will be very glad ^__^
+If you are interested in contributing to this project, I will be very glad ^__^
 
 ### My Social Networks
 You can get in contact with me by:
