@@ -57,9 +57,15 @@ $NftHistory->allTransferTrx($fromBlock, $toBlock);
 $fromBlock and $toBlock must be string of hex type (you could set "0x0" as a first block and "latest" as the final block)
 
 ### allTrx
-you can get all transaction of an nft contract address without any filter. Be aware that most networks will throw an exception in this situation due to a limitation in log output. You must set a specific block number instead of "latest" for the $toBlock variable.
+You can get all transaction of an nft contract address without any filter. Be aware that most networks will throw an exception in this situation due to a limitation in log output. You must set a specific block number instead of "latest" for the $toBlock variable.
 ```php
 $NftHistory->allTrx($fromBlock, $toBlock);
+```
+
+### receiptByTrxHash
+You can get the information of receipt transaction by using this function. pass transaction hash to this function. it returns an object of transaction.
+```php
+$NftHistory->receiptByTrxHash($trxHash);
 ```
 
 ### nftTrxWei
