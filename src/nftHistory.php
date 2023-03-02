@@ -120,26 +120,81 @@ final class nftHistory{
 
     /**
      * Method to get the sender address of the transaction
-     * @param array $topics is the array of all topics
+     * @param array $trxHash is hash of transaction
+     * @param string $eventName event signature e.g "Transfer"
      */
-    function fromAddress($topics){
+    function fromAddress($trxHash, $eventName=null){
 
         $fromAddress = new Topics();
-        $result = $fromAddress->fromAddress($topics);
+        $result = $fromAddress->fromAddress($trxHash);
+        $res = $this->exec($result);
 
-        return $result;
+        $columnsTopics = array_column($res['logs'], "topics"); 
+
+        $fromAddress = array_column($columnsTopics, 1);
+
+        if(isset($eventName) && $eventName != null){
+
+            $evenSig = new Topics();
+            $event = $evenSig->eventSignature($eventName);
+
+            $filtered_topics = array_filter($columnsTopics, function($log) use($event) {
+               
+                return in_array($event, $log);
+               
+            });
+            
+            $resultTopics = $filtered_topics[key($filtered_topics)][1];
+
+        }else{
+
+            $topics = array_column($columnsTopics, 1);
+
+            $resultTopics =  $topics;
+
+        }
+
+        return $resultTopics;
+
     }
 
     /**
      *  Method to get the receipt address of the transaction
      * @param array $topics is the array of all topics
+     * @param string $eventName event signature e.g "Transfer"
      */
-    function toAddress($topics){
+    function toAddress($trxHash, $eventName=null){
 
-        $toAddress = new Topics();
-        $result = $toAddress->toAddress($topics);
+        $fromAddress = new Topics();
+        $result = $fromAddress->toAddress($trxHash);
+        $res = $this->exec($result);
 
-        return $result;
+        $columnsTopics = array_column($res['logs'], "topics"); 
+
+        $fromAddress = array_column($columnsTopics, 2);
+
+        if(isset($eventName) && $eventName != null){
+
+            $evenSig = new Topics();
+            $event = $evenSig->eventSignature($eventName);
+
+            $filtered_topics = array_filter($columnsTopics, function($log) use($event) {
+               
+                return in_array($event, $log);
+               
+            });
+
+            $resultTopics = $filtered_topics[key($filtered_topics)][2];
+
+        }else{
+
+            $topics = array_column($columnsTopics, 2);
+
+            $resultTopics =  $topics;
+
+        }
+
+        return $resultTopics;
 
     }
 

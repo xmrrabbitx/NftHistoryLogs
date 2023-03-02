@@ -25,19 +25,41 @@ class Topics{
     }
 
     /**
-     * @param array $topics topics of a contract address
+     * @param array $transactionHash hash of transaction
      */
-    function fromAddress($topics){
+    function fromAddress($transactionHash){
 
-        return $topics[1];
+       
+         # Construct the JSON-RPC request
+         $data = array(
+            'jsonrpc' => '2.0',
+            'id' => 1,
+            'method' => 'eth_getTransactionReceipt',
+            'params' => array(
+                $transactionHash
+            ),
+        );
+
+        return $data;
     }
 
     /**
-     * @param array $topics topics of a contract address
+     * @param array $transactionHash hash of transaction
      */
-    function toAddress($topics){
+    function toAddress($transactionHash){
 
-        return $topics[2];
+       
+         # Construct the JSON-RPC request
+         $data = array(
+            'jsonrpc' => '2.0',
+            'id' => 1,
+            'method' => 'eth_getTransactionReceipt',
+            'params' => array(
+                $transactionHash
+            ),
+        );
+
+        return $data;
     }
 
     /**

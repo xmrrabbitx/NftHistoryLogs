@@ -15,6 +15,9 @@ class nftTrxWei{
 
     }
 
+    /**
+     * Method to get the value of transaction in WEI format
+     */
     function getTrxWei(){
 
          # Construct the JSON-RPC request
@@ -31,6 +34,9 @@ class nftTrxWei{
         
     }
 
+    /**
+     * Method to check lenght of data transaction
+     */
     function checkTrxWei($data){
 
         $amountWei = ["value"=>array()];
