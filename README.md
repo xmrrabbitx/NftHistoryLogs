@@ -82,13 +82,13 @@ $NftHistory->eventSig("Transfer");
 event name could be this 3 option as string type: "Transfer" , "Approval" and "ApprovalForAll"
 
 ### fromAddress
-if you get specific nft transaction and you want identify the sender of the transaction, pass transaction hash. $eventName is optional:
+if you get specific nft transaction and you want identify the sender address of the transaction, pass transaction hash. $eventName is optional:
 ```php
 $NftHistory->fromAddress($trxHash, $eventName);
 ```
 
 ### toAddress
-If you receive a specific nft transaction and want to identify the recipient, pass transaction hash. $eventName is optional:
+If you receive a specific nft transaction and want to identify the recipient address, pass transaction hash. $eventName is optional:
 ```php
 $NftHistory->toAddress($trxHash, $eventName);
 ```
