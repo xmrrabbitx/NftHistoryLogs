@@ -62,10 +62,10 @@ you can get all transaction of an nft contract address without any filter. Be aw
 $NftHistory->allTrx($fromBlock, $toBlock);
 ```
 
-### nftTransferWei
-Most NFT transfer transactions have no data about ether transferred between addresses, but if it exists, you can pass the data array you got from the transfer function and return the amount of ether transferred. Remember, this amount is in WEI format, but you could convert it to ether later.
+### nftTrxWei
+every transaction has a property called "data". this section is a hexadecimal number in Wei format. you must pass transaction hash to return an array of data. you can also filter by using $eventName. $eventName is optional.
 ```php
-$NftHistory->nftTransferWei($data);
+$NftHistory->nftTrxWei($transactionHash, $eventName);
 ```
 
 ### eventSig
