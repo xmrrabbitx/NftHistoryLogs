@@ -1,6 +1,7 @@
 <?php
 
 namespace Nft\History\Methods\Transfer;
+
 use Nft\History\Methods\Topics;
 
 class transferTrxId{

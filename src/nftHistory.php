@@ -12,6 +12,8 @@ use Nft\History\Methods\allTrx;
 use Nft\History\Methods\Transfer\transferTrxId;
 use Nft\History\Methods\Transfer\allTransferTrx;
 use Nft\History\Methods\genesisBlock;
+use Nft\History\Methods\receiptByTrxHash;
+use Nft\History\Methods\nftTrxWei;
 
 final class nftHistory{
 
@@ -62,7 +64,7 @@ final class nftHistory{
     /**
     * Method to get all transfer transactions of an NFT contract
     */
-    function allTransferTrx($fromBlock,$toBlock){
+    function allTransferTrx($fromBlock, $toBlock){
 
         $allTransferTrx = new allTransferTrx($this->contractAddress,$fromBlock,$toBlock);
         $data = $allTransferTrx->getTransferTrx();
@@ -73,11 +75,11 @@ final class nftHistory{
     }
 
     /**
-     * Method to get all transfer transaction of a specific NFT token ID
+     * Method to get all transfer transaction of a specific NFT with token ID
      *
      * @param int $tokenId The ID of the NFT token
      */
-    function transferTrxById($tokenId,$fromBlock,$toBlock){
+    function transferTrxById($tokenId, $fromBlock, $toBlock){
 
         $transferTrxById = new transferTrxId($this->contractAddress,$fromBlock,$toBlock);
         $data = $transferTrxById->getTransferTrxById($tokenId);
@@ -87,6 +89,26 @@ final class nftHistory{
 
     }
 
+     /**
+     * Method to get all Orders transaction of a specific NFT with token ID
+     *
+     * @param int $tokenId The ID of the NFT token
+     */
+    function receiptByTrxHash($trxHash){
+
+        $receiptByTrxHash = new receiptByTrxHash();
+        $data = $receiptByTrxHash->getReceiptByTrxHash($trxHash);
+
+        $result = $this->exec($data);
+        return $this->result($result);
+
+    }
+
+    /**
+     * Method to get desired event signature
+     *
+     * @param string $eventName is the name of event e.g "Transfer"
+     */
     function eventSig($eventName){
 
         $evenSig = new Topics();
@@ -96,6 +118,10 @@ final class nftHistory{
 
     }
 
+    /**
+     * Method to get the sender address of the transaction
+     * @param array $topics is the array of all topics
+     */
     function fromAddress($topics){
 
         $fromAddress = new Topics();
@@ -104,6 +130,10 @@ final class nftHistory{
         return $result;
     }
 
+    /**
+     *  Method to get the receipt address of the transaction
+     * @param array $topics is the array of all topics
+     */
     function toAddress($topics){
 
         $toAddress = new Topics();
@@ -113,6 +143,10 @@ final class nftHistory{
 
     }
 
+    /**
+     * obtain token id based on topics
+     * @param array $topics is the array of all topics
+     */
     function tokenId($topics){
 
         $tokenId = new Topics();
@@ -122,6 +156,9 @@ final class nftHistory{
 
     }
 
+    /**
+     * the first Block
+     */
     function genesisBlock(){
 
         $genesis = new genesisBlock($this->contractAddress);
@@ -132,10 +169,55 @@ final class nftHistory{
 
     }
 
-    function nftTransferWei($data){
+    /**
+     * @param hex $transactionHash your desired transaction hash 
+     * @param string $eventName event signature name that you want to filter by
+     */
+    function nftTrxWei($transactionHash, $eventName=null){
+
+        $nftTrxWei = new nftTrxWei($transactionHash);
+        $amount = $nftTrxWei->getTrxWei();
+        $result = $this->exec($amount);
         
-        $amount = hexdec($data['data']);
-        return $amount;
+        $columnsTopics = array_column($result['logs'], "topics");
+        $topics = array_column($columnsTopics, 0);
+
+        $data = array_column($result['logs'], "data");
+
+        if(isset($eventName) && $eventName != null){
+
+            $evenSig = new Topics();
+            $event = $evenSig->eventSignature($eventName);
+            
+            $filtered_topics = array_filter($result['logs'], function($log) use($event) {
+               
+                return in_array($event, $log['topics']);
+               
+            });
+
+            $filteredData = [];   
+            $filtered_data = array_filter($filtered_topics, function($log) use(&$filteredData) {
+            
+               array_push($filteredData, $log['data']);
+
+            });
+
+            $checkTrxWei = $nftTrxWei->checkTrxWei($filteredData);
+
+        }else{
+
+            $filteredData = []; 
+            $filtered_topics = array_filter($result['logs'], function($log) use(&$filteredData) {
+               
+                 array_push($filteredData, $log['data']);
+               
+            });
+
+            $checkTrxWei = $nftTrxWei->checkTrxWei($filteredData);
+
+        }
+
+        return $this->result($checkTrxWei);
 
     }
 
@@ -168,6 +250,8 @@ final class nftHistory{
             $error = curl_error($curl);
             print_r($error);
         }
+
+        #print_r($response);
 
         # error checking
         if (!empty($response)) {
