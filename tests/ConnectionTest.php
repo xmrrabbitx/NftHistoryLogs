@@ -30,23 +30,20 @@ final class ConnectionTest extends TestCase{
     /** @test */
     public function testConnection():void{
 
-
         $nfthistory = new nftHistory($this->testContractAddress, $this->testHost);
 
         $data = array(
             'jsonrpc' => '2.0',
             'id' => 1,
-            'method' => 'eth_getLogs',
+            'method' => 'net_listening',
             'params' => array(
-                array(            
-                    "address" => $this->testContractAddress,
-                )
+                
             )
         );
+
         $result = $nfthistory->exec($data);
 
-        $this->assertIsArray($result);
+        $this->assertTrue($result);
 
     }
-
 }
