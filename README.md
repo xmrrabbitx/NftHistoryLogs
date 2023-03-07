@@ -75,7 +75,7 @@ $NftHistory->nftTrxWei($transactionHash, $eventName);
 ```
 
 ### eventSig
-You could also get a 256-bit hashed event signature, such as "Transfer" or "Approval." 
+You could also get a 256-bit hashed event signature. event signatures supported at this time: "Transfer" , "Approval" , "ApprovalForAll" and "OrdersMatched" .
 ```php
 $NftHistory->eventSig("Transfer");
 ```
