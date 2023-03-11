@@ -4,7 +4,7 @@ namespace Nft\History\Methods;
 
 use Nft\History\Methods\Topics;
 
-class receiptByTrxHash{
+class trxByHash{
 
     /**
      * @param $contractAddress the contract address of an nft
@@ -14,16 +14,16 @@ class receiptByTrxHash{
     }
 
     /**
-     * Method to retreive information of a receipent transaction
+     * Method to retreive information of a transaction by using transaction hash
      * @param $trxHash is the transaction hash in hex format
      */
-    function getReceiptByTrxHash($trxHash){
+    function getTrxByHash($trxHash){
 
          # Construct the JSON-RPC request
          $data = array(
             'jsonrpc' => '2.0',
             'id' => 1,
-            'method' => 'eth_getTransactionReceipt',
+            'method' => 'eth_getTransactionByHash',
             'params' => array(
                             $trxHash
             ),

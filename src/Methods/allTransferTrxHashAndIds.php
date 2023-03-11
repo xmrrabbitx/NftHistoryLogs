@@ -23,6 +23,9 @@ class allTransferTrxHashAndIds{
 
     }
 
+    /**
+     * Method to rearrange the transaction hashes by ids
+     */
     function getAllTransferTrxHashAndIds(){
 
         # Construct the JSON-RPC request
@@ -36,8 +39,7 @@ class allTransferTrxHashAndIds{
                     "fromBlock" => $this->fromBlock,
                     "toBlock" =>  $this->toBlock,
                     "topics"=>[
-                        $this->eventSig,
-                        
+                        $this->eventSig, 
                     ]
                 ),
             ),

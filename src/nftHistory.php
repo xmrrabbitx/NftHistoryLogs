@@ -16,6 +16,7 @@ use Nft\History\Methods\Topics;
 use Nft\History\Methods\genesisBlock;
 use Nft\History\Methods\nftTrxWei;
 use Nft\History\Methods\allTransferTrxHashAndIds;
+use Nft\History\Methods\trxByHash;
 
 final class nftHistory{
 
@@ -105,6 +106,21 @@ final class nftHistory{
         return $this->result($result);
 
     }
+
+    /**
+     * Method to retreive information of a transaction by using transaction hash
+     * @param $trxHash is the transaction hash in hex format
+     */
+    function getTrxByHash($trxHash){
+
+        $trxByHash = new trxByHash($this->contractAddress);
+        $getTrxByHash = $trxByHash->getTrxByHash($trxHash);
+        $res = $this->exec($getTrxByHash);
+
+        return $this->result($res);
+
+    }
+
 
     /**
      * Method to rearrange the transaction hashes by ids
