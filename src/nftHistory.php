@@ -7,13 +7,15 @@
 namespace Nft\History;
 
 use \Exception as Exception;
-use Nft\History\Methods\Topics;
 use Nft\History\Methods\allTrx;
-use Nft\History\Methods\Transfer\transferTrxId;
 use Nft\History\Methods\Transfer\allTransferTrx;
-use Nft\History\Methods\genesisBlock;
+use Nft\History\Methods\Transfer\transferTrxId;
 use Nft\History\Methods\receiptByTrxHash;
+use Nft\History\Methods\topNfts;
+use Nft\History\Methods\Topics;
+use Nft\History\Methods\genesisBlock;
 use Nft\History\Methods\nftTrxWei;
+use Nft\History\Methods\allTransferTrxHashAndIds;
 
 final class nftHistory{
 
@@ -101,6 +103,33 @@ final class nftHistory{
 
         $result = $this->exec($data);
         return $this->result($result);
+
+    }
+
+    /**
+     * Method to rearrange the transaction hashes by ids
+     */
+    function getAllTransferTrxHashAndIds(){
+
+        $allTransferTrxHashByIds = new allTransferTrxHashAndIds($this->contractAddress, "0x0","latest");
+        $getAllTransferTrxHashByIds = $allTransferTrxHashByIds->getAllTransferTrxHashAndIds();
+        $getAllTransferTrxHashByIds = $this->exec($getAllTransferTrxHashByIds);
+
+        $filtered_topics = array_filter($getAllTransferTrxHashByIds, function($log) use(&$res){
+        
+          if($res && array_key_exists(hexdec($log['topics'][3]),$res)){
+            
+            array_push($res[hexdec($log['topics'][3])],$log['transactionHash']);
+
+          }else{
+
+            $res[hexdec($log['topics'][3])] = array($log['transactionHash']);
+            
+          }
+         
+        });
+
+        return $this->result($res);
 
     }
 
@@ -306,7 +335,7 @@ final class nftHistory{
             print_r($error);
         }
 
-        #print_r($response);
+        # print_r($response);
 
         # error checking
         if (!empty($response)) {
