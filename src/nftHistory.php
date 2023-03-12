@@ -322,6 +322,22 @@ final class nftHistory{
     }
 
     /**
+     * Method to convert WEI to Ether format
+     */
+    function weiToEther($weiValue){
+     
+        # convert hex to dec format
+        $type = str_split($weiValue,2);
+        if($type[0] == "0x"){
+            $weiValue = hexdec($weiValue);
+        }
+
+        $ether = bcdiv($weiValue, bcpow(10, 18), 2);
+
+        return $this->result($ether);
+    }
+
+    /**
      * Method to execute the JSON-RPC request and retrieve the 
      * transaction history
      *
