@@ -82,7 +82,7 @@ $NftHistory->receiptByTrxHash($trxHash);
 ```
 
 ### topSellNfts
-showing th top selling nfts to the lowest prices. you can set mode on "singleThread" and "multiThread". $mode must be string. singleThread is slower and request single by single and multiThread is a bulk request to server. be aware of rate limit of the destination server.
+showing the top selling nfts to the lowest prices. you can set mode on "singleThread" and "multiThread". $mode must be string. singleThread is slower and request single by single and multiThread is a bulk request to server. be aware of rate limit of the destination server.
 ```php
 $NftHistory->topSellNfts($mode);
 ```
