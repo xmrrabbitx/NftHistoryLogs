@@ -59,7 +59,7 @@ $fromBlock and $toBlock must be string of hex type (you could set "0x0" as a fir
 ### getAllTransferTrxHashAndIds
 You can get all transfer information arranged and categorized by token ids. It returns an object.
 ```php
-$nfthistory->getAllTransferTrxHashAndIds();
+$nfthistory->allTransferTrxHashAndIds();
 ```
 
 ### getTrxByHash
@@ -81,10 +81,22 @@ You can get the information of receipt transaction by using this function. pass 
 $NftHistory->receiptByTrxHash($trxHash);
 ```
 
+### topSellNfts
+showing th top selling nfts to the lowest prices. you can set mode on "singleThread" and "multiThread". $mode must be string. singleThread is slower and request single by single and multiThread is a bulk request to server. be aware of rate limit of the destination server.
+```php
+$NftHistory->topSellNfts($mode);
+```
+
 ### nftTrxWei
 every transaction has a property called "data". this section is a hexadecimal number in Wei format. you must pass transaction hash to return an array of data. you can also filter by using $eventName. $eventName is optional.
 ```php
 $NftHistory->nftTrxWei($transactionHash, $eventName);
+```
+
+### weiToEther
+convert WEI values of token to Ether format
+```php
+$NftHistory->weiToEther($weiValue);
 ```
 
 ### eventSig
