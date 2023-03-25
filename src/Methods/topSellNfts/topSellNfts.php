@@ -32,7 +32,6 @@ class topSellNfts{
         $trxHashandIdsClass = new allTransferTrxHashAndIds($this->contractAddress, $this->provider);
         $trxHashandIds = $trxHashandIdsClass->getAllTransferTrxHashAndIds();
 
-        
         $topSellNftsJson = new topSellNftsJson();
 
         $weiToEther = new weiToEther();
