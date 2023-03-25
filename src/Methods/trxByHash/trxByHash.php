@@ -21,7 +21,7 @@ class trxByHash{
 
     }
 
-    /**
+   /**
      * Method to retreive information of a transaction by using transaction hash
      * @param $trxHash is the transaction hash in hex format
      */

@@ -16,8 +16,6 @@ class allTransferTrx{
 
     /**
      * @param string $contractAddress the contract address of an nft
-     * @param hex $fromBlock the begining block to get logs
-     * @param hex $toBlock the destination block to get logs
      */
     function __construct($contractAddress, $provider){
 
@@ -25,9 +23,13 @@ class allTransferTrx{
 
         $this->exec = new singleThreadExec($contractAddress, $provider);
 
-        
     }
 
+    /**
+     * Method to get all transfer transactions of an NFT contract
+     * @param hex $fromBlock the begining block to get logs
+     * @param hex $toBlock the destination block to get logs
+     */
     function getAllTransferTrx($args){
 
         $fromBlock = $args[0];

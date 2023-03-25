@@ -11,6 +11,7 @@ class genesisBlock{
     private $contractAddress;
 
     /**
+     * the first block of smart contract
      * @param $contractAddress the contract address of an nft
      */
     function __construct($contractAddress, $provider){

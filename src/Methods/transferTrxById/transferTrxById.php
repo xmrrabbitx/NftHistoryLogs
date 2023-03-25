@@ -25,6 +25,12 @@ class transferTrxById{
 
     }
 
+    /**
+     * Method to get all transfer transaction of a specific NFT with token ID
+     * @param int $tokenId The ID of the NFT token
+     * @param hex $fromBlock 
+     * @param hex $toBlock
+     */
     function getTransferTrxById($args){
 
         $tokenId = $args[0];

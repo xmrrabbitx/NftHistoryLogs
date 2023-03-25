@@ -18,7 +18,8 @@ class toAddress{
     }
 
     /**
-     * @param array $transactionHash hash of transaction
+     *  Method to get the receipt address of the transaction
+     * @param string $eventName event signature e.g "Transfer"
      */
     function getToAddress($args){
 

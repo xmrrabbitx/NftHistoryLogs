@@ -15,8 +15,10 @@ class fromAddress{
         $this->eventSig = new eventSig();
     }
    
-    /**
-     * @param array $transactionHash hash of transaction
+     /**
+     * Method to get the sender address of the transaction
+     * @param array $trxHash is the hash of transaction
+     * @param string $eventName event signature e.g "Transfer"
      */
     function getFromAddress($args){
 

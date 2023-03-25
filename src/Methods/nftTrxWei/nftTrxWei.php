@@ -23,6 +23,8 @@ class nftTrxWei{
 
     /**
      * Method to get the value of transaction in WEI format
+     * @param hex $transactionHash your desired transaction hash 
+     * @param string $eventName event signature name that you want to filter by
      */
     function getNftTrxWei($args){
 

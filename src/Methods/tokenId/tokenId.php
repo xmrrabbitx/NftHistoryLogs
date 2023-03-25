@@ -5,7 +5,8 @@ namespace Nft\History\Methods\tokenId;
 class tokenId{
 
     /**
-     * @param array $topics topics of a contract address
+     * obtain token id based on topics
+     * @param array $topics is the array of all topics
      */
     function getTokenId($args){
 
