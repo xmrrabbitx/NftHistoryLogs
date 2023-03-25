@@ -1,32 +1,27 @@
 <?php
 
-namespace Nft\History\Methods;
+namespace Nft\History\Methods\transferTrxById;
 
-use Nft\History\Methods\Topics;
+use Nft\History\Methods\eventSig\eventSig;
 
-class allTransferTrxHashAndIds{
+class transferTrxByIdJson{
 
     private $contractAddress;
 
     /**
      * @param $contractAddress the contract address of an nft
      */
-    function __construct($contractAddress,$fromBlock,$toBlock){
+    function __construct($contractAddress){
 
         $this->contractAddress = $contractAddress;
-        $this->fromBlock = $fromBlock;
-        $this->toBlock = $toBlock;
 
         # call transfer event signature
-        $this->transferEvenet = new Topics();
-        $this->eventSig = $this->transferEvenet->eventsignature("Transfer");
+        $this->eventSig = new eventSig();
+        $this->transferEventSig = $this->eventSig->getEventSig(["Transfer"]);
 
     }
 
-    /**
-     * Method to rearrange the transaction hashes by ids
-     */
-    function getAllTransferTrxHashAndIds(){
+    function getTransferTrxByIdJson($tokenId, $fromBlock, $toBlock){
 
         # Construct the JSON-RPC request
         $data = array(
@@ -36,10 +31,13 @@ class allTransferTrxHashAndIds{
             'params' => array(
                 array(            
                     "address" => $this->contractAddress,
-                    "fromBlock" => $this->fromBlock,
-                    "toBlock" =>  $this->toBlock,
+                    "fromBlock" => $fromBlock,
+                    "toBlock" =>   $toBlock,
                     "topics"=>[
-                        $this->eventSig, 
+                        $this->transferEventSig,
+                        null,
+                        null,
+                        '0x' . str_pad(dechex($tokenId), 64, '0', STR_PAD_LEFT)
                     ]
                 ),
             ),

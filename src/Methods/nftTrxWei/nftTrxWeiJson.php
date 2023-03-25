@@ -1,10 +1,10 @@
 <?php
 
-namespace Nft\History\Methods;
+namespace Nft\History\Methods\nftTrxWei;
 
-use Nft\History\Methods\Topics;
+class nftTrxWeiJson{
 
-class trxByHash{
+    private $transactionHash;
 
     /**
      * @param $contractAddress the contract address of an nft
@@ -14,22 +14,21 @@ class trxByHash{
     }
 
     /**
-     * Method to retreive information of a transaction by using transaction hash
-     * @param $trxHash is the transaction hash in hex format
+     * Method to get the value of transaction in WEI format
      */
-    function getTrxByHash($trxHash){
+    function getNftTrxWeiJson($TrxHash){
 
          # Construct the JSON-RPC request
          $data = array(
             'jsonrpc' => '2.0',
             'id' => 1,
-            'method' => 'eth_getTransactionByHash',
+            'method' => 'eth_getTransactionReceipt',
             'params' => array(
-                            $trxHash
+                $TrxHash
             ),
         );
 
         return $data;
-
+        
     }
 }

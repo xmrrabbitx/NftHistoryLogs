@@ -7,16 +7,18 @@
 namespace Nft\History;
 
 use \Exception as Exception;
-use Nft\History\Methods\allTrx;
-use Nft\History\Methods\Transfer\allTransferTrx;
+use Nft\History\Methods\allTrx\allTrx;
+use Nft\History\Methods\allTransferTrx\allTransferTrx;
 use Nft\History\Methods\Transfer\transferTrxId;
-use Nft\History\Methods\receiptByTrxHash;
+use Nft\History\Methods\receiptByTrxHash\receiptByTrxHash;
 use Nft\History\Methods\topNfts;
-use Nft\History\Methods\Topics;
+use Nft\History\Methods\eventSig\eventSig;
+use Nft\History\Methods\fromAddress\fromAddress;
 use Nft\History\Methods\genesisBlock;
 use Nft\History\Methods\nftTrxWei;
 use Nft\History\Methods\allTransferTrxHashAndIds;
-use Nft\History\Methods\trxByHash;
+use Nft\History\Methods\trxByHash\trxByHash;
+use Nft\History\Methods\trxByHash\topSellNfts;
 
 final class nftHistory{
 
@@ -49,24 +51,28 @@ final class nftHistory{
             $this->provider = $provider;
 
        }
+
     }
 
-    /**
-     * Method to get all transactions history of an NFT contract
-     */
-    function allTrx($fromBlock,$toBlock){
-    
-        $allTrx = new allTrx($this->contractAddress,$fromBlock,$toBlock);
-        $data = $allTrx->getAllTrx();
+    function __call($name, $arguments){
+        
+        if (empty($this->provider)) {
+            throw new \RuntimeException('Please set provider first.');
+        }
 
-        $result = $this->exec($data);
+        $className = sprintf("Nft\History\Methods\%s\%s" , $name, $name);
+        $classNameObj = new $className($this->contractAddress, $this->provider);
+        $methodName = "get" . ucfirst($name);
+        $result = $classNameObj->$methodName($arguments);
+        
         return $this->result($result);
-
+         
     }
 
     /**
     * Method to get all transfer transactions of an NFT contract
     */
+    /*
     function allTransferTrx($fromBlock, $toBlock){
 
         $allTransferTrx = new allTransferTrx($this->contractAddress,$fromBlock,$toBlock);
@@ -76,12 +82,14 @@ final class nftHistory{
         return $this->result($result);
 
     }
+    */
 
     /**
      * Method to get all transfer transaction of a specific NFT with token ID
      *
      * @param int $tokenId The ID of the NFT token
      */
+    /*
     function transferTrxById($tokenId, $fromBlock, $toBlock){
 
         $transferTrxById = new transferTrxId($this->contractAddress,$fromBlock,$toBlock);
@@ -91,12 +99,14 @@ final class nftHistory{
         return $this->result($result);
 
     }
+*/
 
      /**
      * Method to get all Orders transaction of a specific NFT with token ID
      *
      * @param int $tokenId The ID of the NFT token
      */
+    /*
     function receiptByTrxHash($trxHash){
 
         $receiptByTrxHash = new receiptByTrxHash();
@@ -106,11 +116,12 @@ final class nftHistory{
         return $this->result($result);
 
     }
-
+*/
     /**
      * Method to retreive information of a transaction by using transaction hash
      * @param $trxHash is the transaction hash in hex format
      */
+    /*
     function getTrxByHash($trxHash){
 
         $trxByHash = new trxByHash($this->contractAddress);
@@ -120,11 +131,12 @@ final class nftHistory{
         return $this->result($res);
 
     }
-
+*/
 
     /**
      * Method to rearrange the transaction hashes by ids
      */
+    /*
     function getAllTransferTrxHashAndIds(){
 
         $allTransferTrxHashByIds = new allTransferTrxHashAndIds($this->contractAddress, "0x0","latest");
@@ -148,12 +160,14 @@ final class nftHistory{
         return $this->result($res);
 
     }
+    */
 
     /**
      * Method to get desired event signature
      *
      * @param string $eventName is the name of event e.g "Transfer"
      */
+    /*
     function eventSig($eventName){
 
         $evenSig = new Topics();
@@ -162,12 +176,13 @@ final class nftHistory{
         return $result;
 
     }
-
+*/
     /**
      * Method to get the sender address of the transaction
      * @param array $trxHash is hash of transaction
      * @param string $eventName event signature e.g "Transfer"
      */
+    /*
     function fromAddress($trxHash, $eventName=null){
 
         $fromAddress = new Topics();
@@ -203,11 +218,14 @@ final class nftHistory{
 
     }
 
+    */
+
     /**
      *  Method to get the receipt address of the transaction
      * @param array $topics is the array of all topics
      * @param string $eventName event signature e.g "Transfer"
      */
+    /*
     function toAddress($trxHash, $eventName=null){
 
         $fromAddress = new Topics();
@@ -243,10 +261,13 @@ final class nftHistory{
 
     }
 
+    */
+
     /**
      * obtain token id based on topics
      * @param array $topics is the array of all topics
      */
+    /*
     function tokenId($topics){
 
         $tokenId = new Topics();
@@ -255,10 +276,11 @@ final class nftHistory{
         return $result;
 
     }
-
+*/
     /**
      * the first Block
      */
+    /*
     function genesisBlock(){
 
         $genesis = new genesisBlock($this->contractAddress);
@@ -268,11 +290,13 @@ final class nftHistory{
         return $this->result($result);
 
     }
+    */
 
     /**
      * @param hex $transactionHash your desired transaction hash 
      * @param string $eventName event signature name that you want to filter by
      */
+    /*
     function nftTrxWei($transactionHash, $eventName=null){
 
         $nftTrxWei = new nftTrxWei($transactionHash);
@@ -320,10 +344,12 @@ final class nftHistory{
         return $this->result($checkTrxWei);
 
     }
+    */
 
     /**
      * Method to convert WEI to Ether format
      */
+    /*
     function weiToEther($weiValue){
      
         # convert hex to dec format
@@ -336,6 +362,7 @@ final class nftHistory{
 
         return $this->result($ether);
     }
+*/
 
     /**
      * Method to execute the JSON-RPC request and retrieve the 

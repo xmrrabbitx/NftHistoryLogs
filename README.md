@@ -66,7 +66,7 @@ $nfthistory->getAllTransferTrxHashAndIds();
 You can get information of an specific transaction by passing transaction hash.
 it returns an Object. the trxHash variable is necessary.
 ```php
- $nfthistory->getTrxByHash($trxHash);
+ $nfthistory->trxByHash($trxHash);
 ```
 
 ### allTrx

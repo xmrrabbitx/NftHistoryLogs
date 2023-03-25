@@ -1,8 +1,8 @@
 <?php
 
-namespace Nft\History\Methods;
+namespace Nft\History\Methods\genesisBlock;
 
-class genesisBlock{
+class genesisBlockJson{
 
     private $contractAddress;
 
@@ -15,7 +15,7 @@ class genesisBlock{
 
     }
 
-    function getGenesisBlock(){
+    function getGenesisBlockJson(){
 
         # Construct the JSON-RPC request
         $data = array(

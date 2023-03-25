@@ -1,8 +1,8 @@
 <?php
 
-namespace Nft\History\Methods;
+namespace Nft\History\Methods\allTrx;
 
-class allTrx{
+class allTrxJson{
 
     private $contractAddress;
     private $fromBlock;
@@ -13,15 +13,13 @@ class allTrx{
      * @param $fromBlock the begining block to get logs
      * @param $toBlock the destination block to get logs
      */
-    function __construct($contractAddress,$fromBlock,$toBlock){
+    function __construct($contractAddress){
 
         $this->contractAddress = $contractAddress;
-        $this->fromBlock = $fromBlock;
-        $this->toBlock = $toBlock;
 
     }
 
-    public function getAllTrx(){
+    public function getAllTrxJson($fromBlock, $toBlock){
         
         # Construct the JSON-RPC request
         $data = array(
@@ -31,8 +29,8 @@ class allTrx{
             'params' => array(
                 array(
                     "address" => $this->contractAddress,
-                    "fromBlock" => $this->fromBlock,
-                    "toBlock" =>  $this->toBlock
+                    "fromBlock" => $fromBlock,
+                    "toBlock" =>  $toBlock
                 )
             )
         );

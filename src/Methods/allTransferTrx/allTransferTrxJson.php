@@ -1,10 +1,10 @@
 <?php
 
-namespace Nft\History\Methods\Transfer;
+namespace Nft\History\Methods\allTransferTrx;
 
-use Nft\History\Methods\Topics;
+use Nft\History\Methods\eventSig\eventSig;
 
-class allTransferTrx{
+class allTransferTrxJson{
 
     private $contractAddress;
     private $fromBlock;
@@ -24,13 +24,13 @@ class allTransferTrx{
         $this->toBlock = $toBlock;
 
         # call transfer event signature
-        $this->transferEvenet = new Topics();
-        $this->eventSig = $this->transferEvenet->eventsignature("Transfer");
+        $this->eventSig = new eventSig();
+        $this->transferEventSig =$this->eventSig->getEventSig(["Transfer"]);
 
     }
 
     
-    function getTransferTrx(){
+    function getAllTransferTrx(){
 
         # Construct the JSON-RPC request
         $data = array(
@@ -43,7 +43,7 @@ class allTransferTrx{
                     "fromBlock" => $this->fromBlock,
                     "toBlock" =>  $this->toBlock,
                     "topics"=>[
-                               $this->eventSig
+                               $this->transferEventSig
                     ]
                 ),
             ),
