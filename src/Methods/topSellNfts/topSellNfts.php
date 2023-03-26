@@ -36,9 +36,6 @@ class topSellNfts{
 
         $weiToEther = new weiToEther();
         
-        $start = microtime(true);
-        //$mh = $this->multi->multiExecInit();
-        
         if($mode === "singleThread"){
            
             $filterData = array_map(function($log) use($topSellNftsJson){
@@ -134,8 +131,9 @@ class topSellNfts{
                     $result = json_decode($re[0],true);
 
                     if(isset($result['result'])){
+
                         $value = $result['result']['value'];
-                        //$nftSumPrice = $weiToEther->getWeiToEther([$sum]);
+                        
                         return $value;
                     }
 
@@ -160,12 +158,7 @@ class topSellNfts{
 
        
         arsort($result);
-        // $this->multi->multiExec($mh);
-        $end = microtime(true);
-        $t = $end - $start;
-        print($t);
         
-
        return $result;
  
     }
