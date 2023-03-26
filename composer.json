@@ -2,7 +2,6 @@
     "name": "nfthistory/nfthistorylogs",
     "description": "Multinetworks Ethereum Interface to manage NFT history transactions logs",
     "type": "library",
-    "version":"v0.0.2",
     "license": "MIT",
     "autoload": {
         "psr-4": {
