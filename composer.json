@@ -26,8 +26,8 @@
         "psr-4": {
             "Test\\": "tests/"
         }
-    },
+    }
     
-    "minimum-stability": "dev"
+    
     
 }
