@@ -56,13 +56,13 @@ $NftHistory->allTransferTrx($fromBlock, $toBlock);
 ```
 $fromBlock and $toBlock must be string of hex type (you could set "0x0" as a first block and "latest" as the final block)
 
-### getAllTransferTrxHashAndIds
+### allTransferTrxHashAndIds
 You can get all transfer information arranged and categorized by token ids. It returns an object.
 ```php
 $nfthistory->allTransferTrxHashAndIds();
 ```
 
-### getTrxByHash
+### trxByHash
 You can get information of an specific transaction by passing transaction hash.
 it returns an Object. the trxHash variable is necessary.
 ```php

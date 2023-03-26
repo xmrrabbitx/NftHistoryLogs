@@ -4,12 +4,11 @@ namespace Test\Unit;
 
 use \PHPUnit\Framework\TestCase;
 
-use Nft\History\nftHistory;
-use Nft\History\Methods\Transfer;
+use Nft\History\Methods\eventSig\eventSig;
 use kornrunner\Keccak;
 
 
-final class TopicsTest extends TestCase{
+final class SigTest extends TestCase{
 
     
       /**
@@ -29,16 +28,16 @@ final class TopicsTest extends TestCase{
     /** @test */
     public function eSig(){
 
-        $nfthistory = new nftHistory($this->testContractAddress, $this->testHost);
+        $eventSig = new eventSig($this->testContractAddress, $this->testHost);
 
         $keccTransfer = Keccak::hash("Transfer(address,address,uint256)",256);
-        $this->assertSame(("0x" . $keccTransfer),  $nfthistory->eventSig("Transfer"));
+        $this->assertSame(("0x" . $keccTransfer),  $eventSig->getEventSig(["Transfer"]));
 
         $keccApprovalForAll = Keccak::hash("ApprovalForAll(address,address,bool)",256);
-        $this->assertSame(("0x" . $keccApprovalForAll), $nfthistory->eventSig("ApprovalForAll"));
+        $this->assertSame(("0x" . $keccApprovalForAll), $eventSig->getEventSig(["ApprovalForAll"]));
 
         $keccApproval = Keccak::hash("Approval(address,address,uint256)",256);
-        $this->assertSame(("0x" . $keccApproval),  $nfthistory->eventSig("Approval"));
+        $this->assertSame(("0x" . $keccApproval),  $eventSig->getEventSig(["Approval"]));
 
         }
 

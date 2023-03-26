@@ -6,8 +6,7 @@ namespace Test;
 
 use \PHPUnit\Framework\TestCase;
 
-use Nft\History\nftHistory;
-use Nft\History\Methods\Transfer;
+use Nft\History\Methods\allTrx\allTrx;
 
 final class AllTrxTest extends TestCase{
 
@@ -16,7 +15,7 @@ final class AllTrxTest extends TestCase{
      * 
      * @var string
      */
-    protected $testHost = 'https://cloudflare-eth.com';
+    protected $testProvider = 'https://cloudflare-eth.com';
 
     /**
      * testContractAddress
@@ -29,9 +28,9 @@ final class AllTrxTest extends TestCase{
     /** @test */
     public function testAllTrx(){
 
-        $nfthistory = new nftHistory($this->testContractAddress, $this->testHost);
+        $allTrx = new allTrx($this->testContractAddress, $this->testProvider);
 
-        $result = $nfthistory->allTrx("0x0","latest");
+        $result = $allTrx->getAllTrx(["0x0","latest"]);
 
         $this->assertIsArray($result);
         $this->assertNotNull($result);

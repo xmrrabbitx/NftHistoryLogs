@@ -4,8 +4,7 @@ namespace Test;
 
 use \PHPUnit\Framework\TestCase;
 
-use Nft\History\nftHistory;
-use Nft\History\Methods\Transfer;
+use Nft\History\Exec\singleThreadExec;
 
 
 final class ConnectionTest extends TestCase{
@@ -15,7 +14,7 @@ final class ConnectionTest extends TestCase{
      * 
      * @var string
      */
-    protected $testHost = 'https://cloudflare-eth.com';
+    protected $testProvider = 'https://mainnet.infura.io/v3/b79cca560563453088d46d6812fdf531';
 
     /**
      * testContractAddress
@@ -30,7 +29,7 @@ final class ConnectionTest extends TestCase{
     /** @test */
     public function testConnection():void{
 
-        $nfthistory = new nftHistory($this->testContractAddress, $this->testHost);
+        $exec = new singleThreadExec($this->testContractAddress, $this->testProvider);
 
         $data = array(
             'jsonrpc' => '2.0',
@@ -41,7 +40,7 @@ final class ConnectionTest extends TestCase{
             )
         );
 
-        $result = $nfthistory->exec($data);
+        $result = $exec->singleExec($data);
 
         $this->assertTrue($result);
 
