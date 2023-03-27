@@ -12,6 +12,7 @@
 #### You could also set any network endpoints like [Alchemy](https://www.alchemy.com/) or [Infura](https://www.infura.io/) or anything you want.
 
 ## Installation 
+⚠️ Note: If you want to use v0.0.1, use its own readme; it is very different from this.
 
 ```bash
  composer require nfthistory/nfthistorylogs dev-master
