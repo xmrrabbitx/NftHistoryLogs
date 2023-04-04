@@ -83,9 +83,9 @@ $NftHistory->receiptByTrxHash($trxHash);
 ```
 
 ### topSellNfts
-showing the top selling nfts to the lowest prices. you can set mode on "singleThread" and "multiThread". $mode must be string. singleThread is slower and request single by single and multiThread is a bulk request to server. be aware of rate limit of the destination server.
+showing the top selling nfts to the lowest prices. you can set mode on "singleThread" and "multiThread". $mode must be string. singleThread is slower and request single by single and multiThread is a bulk request to server. be aware of rate limit of the destination server. $countRank is the numbers of the values you want to obtain. it is optional and must not exceed the numbers of tokens of an contract address. it must be in decimal format.
 ```php
-$NftHistory->topSellNfts($mode);
+$NftHistory->topSellNfts($mode, $countRank);
 ```
 
 ### nftTrxWei
@@ -95,7 +95,7 @@ $NftHistory->nftTrxWei($transactionHash, $eventName);
 ```
 
 ### weiToEther
-convert WEI values of token to Ether format
+convert WEI values of token to Ether format _ if its hex format, will be converted to decimal. 
 ```php
 $NftHistory->weiToEther($weiValue);
 ```
