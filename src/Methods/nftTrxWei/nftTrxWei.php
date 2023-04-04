@@ -29,6 +29,7 @@ class nftTrxWei{
     function getNftTrxWei($args){
 
         $trxHash = $args[0];
+        
         if(isset($args[1])){
             $eventName = $args[1];
         }

@@ -28,6 +28,7 @@ class topSellNfts{
     function getTopSellNfts($args){
 
         $mode = $args[0];
+        
 
         $trxHashandIdsClass = new allTransferTrxHashAndIds($this->contractAddress, $this->provider);
         $trxHashandIds = $trxHashandIdsClass->getAllTransferTrxHashAndIds();
@@ -158,6 +159,13 @@ class topSellNfts{
 
        
         arsort($result);
+
+        if(isset($args[1])){
+
+            $countRank = $args[1];
+            $result = array_slice($result,0,$countRank);
+            
+        }
         
        return $result;
  

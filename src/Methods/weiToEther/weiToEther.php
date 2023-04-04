@@ -11,8 +11,14 @@ class weiToEther{
     function getWeiToEther($args){
 
         $weiValue = $args[0];
-        
-        $ether = bcdiv($weiValue, bcpow(10, 18), 2);
+        if(preg_match('/^0x[0-9a-fA-F]+$/', $weiValue)){
+            
+            $weiValueDec = hexdec($weiValue);
+            
+        }else{
+            $weiValueDec = $weiValue;
+        }
+        $ether = bcdiv($weiValueDec, bcpow(10, 18), 2);
  
         return $ether;
 
