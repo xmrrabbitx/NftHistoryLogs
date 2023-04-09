@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  web:
+    image: php:8.1-apache
+    container_name: nfthistory
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    command: >
+      bash -c '
+      apt-get update &&
+      apt-get install -y libcurl4-openssl-dev &&
+      docker-php-ext-install curl &&
+      docker-php-ext-install bcmath &&
+      apache2-foreground
+      '
+
