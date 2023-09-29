@@ -72,10 +72,6 @@ class topSellNfts{
             //create the multiple cURL handle
             $mh = curl_multi_init();
 
-            $arr = [0=>["https://dummyjson.com/products/1"],1=>["https://dummyjson.com/products/2"]];
-            
-            // $aCurlHandles = array();
-
             $filter = array_map(function($logs) use($topSellNftsJson,&$mh){
 
                return array_map(function($log) use($topSellNftsJson,&$mh){
@@ -103,9 +99,6 @@ class topSellNfts{
                     //add the two handles
                     curl_multi_add_handle($mh,$ch);
                     
-                
-                        // $this->multi->multiExecOpts($data,$mh,$aCurlHandles);
-                        //var_dump($id);
                     
                     return $ch;
                 },$logs);
