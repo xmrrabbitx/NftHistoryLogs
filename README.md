@@ -6,7 +6,7 @@
 
 #### NFT History Logs is the Ethereum PHP API which connects to [JSON RPC](https://www.jsonrpc.org/specification) specs to get the desired logs of an nft contract address or specific nft with id on Ethereum Chain.
 
-#### Supported Chain: just Ethereum for now!
+#### Supported Chain: just Ethereum Chain for now!
 
 #### You need to run a local or remote Ethereum node to use this library.
 #### You could also use testnet like [Ganache](https://trufflesuite.com/ganache/) or [Cloudflare ETH](https://developers.cloudflare.com/web3/ethereum-gateway/) network.
