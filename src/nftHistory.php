@@ -57,7 +57,7 @@ final class nftHistory{
     function __call($name, $arguments){
         
         if (empty($this->provider)) {
-            throw new \RuntimeException('Please set provider first.');
+            throw new \RuntimeException('Please set provider first!');
         }
 
         $className = sprintf("Nft\History\Methods\%s\%s" , $name, $name);
