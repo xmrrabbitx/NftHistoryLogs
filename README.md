@@ -148,8 +148,6 @@ If you are interested in contributing to this project, I will be very glad ^__^
 ### My Social Networks
 You can get in contact with me by:
 <br>
-[Twitter](https://twitter.com/xmrrabbittx)
-<br>
 [Hackernoon](https://hackernoon.com/@xmrrabbitx)
 <br>
 [Linkedin](https://www.linkedin.com/in/xmrrabbitx/)
