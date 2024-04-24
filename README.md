@@ -150,8 +150,6 @@ You can get in contact with me by:
 <br>
 [Twitter](https://twitter.com/xmrrabbittx)
 <br>
-[Instagram](https://www.instagram.com/xmrrabbitx)
-<br>
 [Hackernoon](https://hackernoon.com/@xmrrabbitx)
 <br>
 [Linkedin](https://www.linkedin.com/in/xmrrabbitx/)
