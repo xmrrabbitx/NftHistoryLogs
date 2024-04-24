@@ -6,6 +6,9 @@ use Nft\History\Methods\royaltyPer\royaltyPerJson;
 use Nft\History\Exec\singleThreadExec;
 use Nft\History\Exec\multiThreadExec;
 
+/**
+ * an interface to retrieve royalty percentage of an NFT
+ */
 class royaltyPer{
 
     /**
