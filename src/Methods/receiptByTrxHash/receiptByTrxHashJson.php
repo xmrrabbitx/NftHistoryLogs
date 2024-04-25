@@ -19,7 +19,9 @@ class receiptByTrxHashJson{
      * Method to retreive information of a receipent transaction
      * @param $trxHash is the transaction hash in hex format
      */
-    function getReceiptByTrxHashJson($trxHash){
+    function getReceiptByTrxHashJson($args){
+
+        $trxHash = $args[0];
 
          # Construct the JSON-RPC request
          $data = array(
@@ -27,7 +29,7 @@ class receiptByTrxHashJson{
             'id' => 1,
             'method' => 'eth_getTransactionReceipt',
             'params' => array(
-                            $trxHash[0]
+                            $trxHash
             ),
         );
 

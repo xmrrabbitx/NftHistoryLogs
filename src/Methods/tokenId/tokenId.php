@@ -19,7 +19,7 @@ class tokenId{
 
             # extract token ID from input data
             $tokenId = hexdec($decodedInputData);
-
+            var_dump($topics[3]);
             return $tokenId;
         }
     }
