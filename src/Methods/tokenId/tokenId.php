@@ -11,14 +11,16 @@ class tokenId{
     function getTokenId($args){
 
         $topics = $args[0];
+        
+        if(isset($topics[3])){
 
-        # getting topic index 3
-        $decodedInputData = $topics[3];
+            # getting topic index 3
+            $decodedInputData = $topics[3];
 
-        # extract token ID from input data
-        $tokenId = hexdec($decodedInputData);
+            # extract token ID from input data
+            $tokenId = hexdec($decodedInputData);
 
-        return $tokenId;
-
+            return $tokenId;
+        }
     }
 }

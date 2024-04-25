@@ -27,7 +27,7 @@ class receiptByTrxHashJson{
             'id' => 1,
             'method' => 'eth_getTransactionReceipt',
             'params' => array(
-                            $trxHash
+                            $trxHash[0]
             ),
         );
 

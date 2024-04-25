@@ -27,7 +27,7 @@ class royaltyPer{
      * @param 
      */
     function getRoyaltyPer(){
-        die('stoppp!!!!');
+
         $royaltyPerJson = new royaltyPerJson();
         $data = $royaltyPerJson->getRoyaltyPerJson();
 
