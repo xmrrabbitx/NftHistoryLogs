@@ -37,7 +37,7 @@ class transferTrxByIdJson{
                         $this->transferEventSig,
                         null,
                         null,
-                        '0x' . str_pad(dechex($tokenId), 64, '0', STR_PAD_LEFT)
+                        $tokenId
                     ]
                 ),
             ),

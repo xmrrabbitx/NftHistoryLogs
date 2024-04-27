@@ -19,6 +19,7 @@ use Nft\History\Methods\nftTrxWei;
 use Nft\History\Methods\allTransferTrxHashAndIds;
 use Nft\History\Methods\trxByHash\trxByHash;
 use Nft\History\Methods\trxByHash\topSellNfts;
+use Nft\History\Methods\transferRoyality\transferRoyality;
 
 final class nftHistory{
 

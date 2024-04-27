@@ -37,13 +37,12 @@ class singleThreadExec{
             print_r($error);
         }
 
-        # print_r($response);
+         //print_r($response);
 
         # error checking
         if (!empty($response)) {
             $decoded_response = json_decode($response, true);
             if (isset($decoded_response['error'])) {
-                var_dump($decoded_response);
                 throw new Exception($decoded_response['error']['message']);
             }
             $result = $decoded_response['result'];
