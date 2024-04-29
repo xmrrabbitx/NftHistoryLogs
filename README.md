@@ -101,7 +101,7 @@ $NftHistory->weiToEther($weiValue);
 ```
 
 ### eventSig
-You could also get a 256-bit hashed event signature. event signatures supported at this time: "Transfer" , "Approval" , "ApprovalForAll" and "OrdersMatched" .
+You could also get a 256-bit hashed event signature. event signatures supported at this time: "Transfer" , "Approval" and "ApprovalForAll".
 ```php
 $NftHistory->eventSig("Transfer");
 ```
