@@ -12,11 +12,12 @@ class nftTrxWei{
     /**
      * @param $contractAddress the contract address of an nft
      */
-    function __construct($contractAddress, $provider){
+    function __construct($contractAddress, $provider, $proxy){
 
         $this->contractAddress = $contractAddress;
+        $this->proxy = $proxy;
 
-        $this->exec = new singleThreadExec($contractAddress, $provider);
+        $this->exec = new singleThreadExec($contractAddress, $provider, $this->proxy);
 
         $this->eventSig = new eventSig();
     }

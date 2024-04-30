@@ -44,12 +44,20 @@ final class nftHistory{
      * @param string $contractAddress The address of the NFT contract
      * @param string $provider The Ethereum node URL to connect to
      */
-    function __construct($contractAddress, $provider){
+    function __construct($contractAddress, $provider, $proxy=null){
 
        if (is_string($provider) && (filter_var($provider, FILTER_VALIDATE_URL) !== false)) {
 
             $this->contractAddress = $contractAddress;
             $this->provider = $provider;
+
+
+            if($proxy !== null && filter_var($proxy, FILTER_VALIDATE_URL)){
+                $this->proxy = $proxy;
+            }else{
+                $this->proxy = null;
+            }
+            
 
        }
 
@@ -62,7 +70,7 @@ final class nftHistory{
         }
 
         $className = sprintf("Nft\History\Methods\%s\%s" , $name, $name);
-        $classNameObj = new $className($this->contractAddress, $this->provider);
+        $classNameObj = new $className($this->contractAddress, $this->provider, $this->proxy);
         $methodName = "get" . ucfirst($name);
         $result = $classNameObj->$methodName($arguments);
         

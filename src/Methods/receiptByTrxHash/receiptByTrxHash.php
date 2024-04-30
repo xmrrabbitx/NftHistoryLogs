@@ -12,11 +12,12 @@ class receiptByTrxHash{
     /**
      * @param $contractAddress the contract address of an nft
      */
-    function __construct($contractAddress, $provider){
-
+    function __construct($contractAddress, $provider, $proxy){
+     
         $this->contractAddress = $contractAddress;
-
-        $this->exec = new singleThreadExec($contractAddress, $provider);
+        $this->proxy = $proxy;
+     
+        $this->exec = new singleThreadExec($contractAddress, $provider, $this->proxy);
 
     }
 

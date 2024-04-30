@@ -13,13 +13,14 @@ use Nft\History\Methods\allTransferTrxHashAndIds\allTransferTrxHashAndIds;
 
 class topSellNfts{
 
-    function __construct($contractAddress, $provider){
+    function __construct($contractAddress, $provider, $proxy){
 
         $this->contractAddress = $contractAddress;
         $this->provider = $provider;
+        $this->proxy = $proxy;
         
-        $this->exec = new singleThreadExec($contractAddress, $provider);
-        $this->multi = new multiThreadExec($contractAddress, $provider);
+        $this->exec = new singleThreadExec($contractAddress, $provider, $this->proxy);
+        $this->multi = new multiThreadExec($contractAddress, $provider, $this->proxy);
 
         $this->eventSig = new eventSig();
 

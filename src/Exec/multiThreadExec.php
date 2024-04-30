@@ -33,6 +33,11 @@ class multiThreadExec{
             'Content-Type: application/json'
         ));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+        // set Proxy for the Request
+        if( $this->proxy !== null){
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxy);
+        }   
         
         $json_data = json_encode($data);
 

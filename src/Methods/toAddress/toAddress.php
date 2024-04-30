@@ -9,9 +9,10 @@ use Nft\History\Methods\eventSig\eventSig;
 
 class toAddress{
 
-    function __construct($contractAddress, $provider){
+    function __construct($contractAddress, $provider, $proxy){
 
-        $this->exec = new singleThreadExec($contractAddress, $provider);
+        $this->proxy = $proxy;
+        $this->exec = new singleThreadExec($contractAddress, $provider, $this->proxy);
 
         $this->eventSig = new eventSig();
 

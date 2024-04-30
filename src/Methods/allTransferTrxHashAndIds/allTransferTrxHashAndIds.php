@@ -13,26 +13,30 @@ class allTransferTrxHashAndIds{
     /**
      * @param $contractAddress the contract address of an nft
      */
-    function __construct($contractAddress, $provider){
+    function __construct($contractAddress, $provider, $proxy){
 
         $this->contractAddress = $contractAddress;
+        $this->proxy = $proxy;
 
         # call transfer event signature
         $this->eventSig = new eventSig();
         $this->transferEventSig = $this->eventSig->getEventSig(["Transfer"]);
 
-        $this->exec = new singleThreadExec($contractAddress, $provider);
+        $this->exec = new singleThreadExec($contractAddress, $provider, $this->proxy);
 
     }
 
     /**
      * Method to rearrange the transaction hashes by ids
      */
-    function getAllTransferTrxHashAndIds(){
+    function getAllTransferTrxHashAndIds($args){
 
         if(empty($args)){
             $fromBlock = "0x0";
             $toBlock = "latest";
+        }else{
+          $fromBlock = $args[0];
+          $toBlock = $args[1];
         }
         
         $allTransferTrxHashByIdsJson = new allTransferTrxHashAndIdsJson($this->contractAddress);

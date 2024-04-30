@@ -16,11 +16,12 @@ class allTrx{
      * @param $fromBlock the begining block to get logs
      * @param $toBlock the destination block to get logs
      */
-    function __construct($contractAddress, $provider){
+    function __construct($contractAddress, $provider, $proxy){
 
         $this->contractAddress = $contractAddress;
+        $this->proxy = $proxy;
         
-        $this->exec = new singleThreadExec($contractAddress, $provider);
+        $this->exec = new singleThreadExec($contractAddress, $provider, $this->proxy);
 
     }
 

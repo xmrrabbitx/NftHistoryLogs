@@ -6,11 +6,12 @@ use \Exception as Exception;
 
 class singleThreadExec{
 
-    function __construct($contractAddress, $provider){
+    function __construct($contractAddress, $provider, $proxy=null){
 
         $this->contractAddress = $contractAddress;
         $this->provider = $provider;
-        
+        $this->proxy = $proxy;
+
     }
 
     function singleExec($data){
@@ -22,7 +23,11 @@ class singleThreadExec{
             'Content-Type: application/json'
         ));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        
+
+        // set Proxy for the Request
+        if( $this->proxy !== null){
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxy);
+        }
 
         $json_data = json_encode($data);
 
@@ -30,11 +35,11 @@ class singleThreadExec{
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
         
+        
         $response = curl_exec($ch);
         
         if (curl_errno($ch)) {
             $error = curl_error($curl);
-            print_r($error);
         }
 
          //print_r($response);
