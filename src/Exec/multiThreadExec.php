@@ -7,25 +7,27 @@ use \Exception as Exception;
 
 class multiThreadExec{
 
-    function __construct($contractAddress, $provider){
+    function __construct($contractAddress, $provider, $proxy=null){
 
         $this->contractAddress = $contractAddress;
         $this->provider = $provider;
-        
+        $this->proxy = $proxy;
+
     }
 
     function multiExecInit(){
 
        //create the multiple cURL handle
-       $mh = curl_multi_init();
+       $cmi = curl_multi_init();
 
-       return $mh;
+       return $cmi;
 
     }
 
-    function multiExecOpts($data,$mh,$acurl){
+    function multiExecOpts($data){
 
-        $ch = curl_init();
+        $cmi = $this->multiExecInit();
+
         // set URL and other appropriate options
         curl_setopt($ch, CURLOPT_URL, $this->provider);
         curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -47,11 +49,11 @@ class multiThreadExec{
 
         $aCurlHandles[$id] = $ch;
         //add the two handles
-        curl_multi_add_handle($mh,$ch); 
+        curl_multi_add_handle($cmi,$ch); 
         
     }     
 
-    function multiExec($mh){
+    function multiExec($cmi){
 
         
         

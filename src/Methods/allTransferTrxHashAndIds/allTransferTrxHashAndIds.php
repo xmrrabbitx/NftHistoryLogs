@@ -29,16 +29,16 @@ class allTransferTrxHashAndIds{
     /**
      * Method to rearrange the transaction hashes by ids
      */
-    function getAllTransferTrxHashAndIds($args){
+    function getAllTransferTrxHashAndIds($args=null){
 
-        if(empty($args)){
+        if(empty($args) || $args === null){
             $fromBlock = "0x0";
             $toBlock = "latest";
         }else{
           $fromBlock = $args[0];
           $toBlock = $args[1];
         }
-        
+
         $allTransferTrxHashByIdsJson = new allTransferTrxHashAndIdsJson($this->contractAddress);
         $getAllTransferTrxHashByIds = $allTransferTrxHashByIdsJson->getAllTransferTrxHashAndIdsJson($fromBlock, $toBlock);
         $getAllTransferTrxHashByIds = $this->exec->singleExec($getAllTransferTrxHashByIds);

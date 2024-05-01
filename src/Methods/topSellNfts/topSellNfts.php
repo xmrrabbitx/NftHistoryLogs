@@ -28,16 +28,23 @@ class topSellNfts{
 
     function getTopSellNfts($args){
 
-        $mode = $args[0];
-        
+        if(empty($args) || $args === null){
+            $mode = 'singleThread';
+            $fromBlock = "0x0";
+            $toBlock = "latest";
+        }else{
+            $mode = $args[0];
+            $fromBlock = $args[1];
+            $toBlock = $args[2];
+        }
 
-        $trxHashandIdsClass = new allTransferTrxHashAndIds($this->contractAddress, $this->provider);
-        $trxHashandIds = $trxHashandIdsClass->getAllTransferTrxHashAndIds();
+        $trxHashandIdsClass = new allTransferTrxHashAndIds($this->contractAddress, $this->provider, $this->proxy);
+        $trxHashandIds = $trxHashandIdsClass->getAllTransferTrxHashAndIds([$fromBlock, $toBlock]);
 
         $topSellNftsJson = new topSellNftsJson();
 
         $weiToEther = new weiToEther();
-        
+
         if($mode === "singleThread"){
            
             $filterData = array_map(function($log) use($topSellNftsJson){
@@ -70,38 +77,43 @@ class topSellNfts{
         }
 
         elseif($mode === "multiThread"){
+ 
             //create the multiple cURL handle
-            $mh = curl_multi_init();
+            $cmi = curl_multi_init();
 
-            $filter = array_map(function($logs) use($topSellNftsJson,&$mh){
+            $filter = array_map(function($logs) use($topSellNftsJson,&$cmi){
 
-               return array_map(function($log) use($topSellNftsJson,&$mh){
+               return array_map(function($log) use($topSellNftsJson,&$cmi){
 
                     
                     $data = $topSellNftsJson->getTopSellNftsJson($log);
 
-                    $ch = curl_init();
+                    $ci = curl_init();
 
                     // set URL and other appropriate options
-                    curl_setopt($ch, CURLOPT_URL, $this->provider);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    curl_setopt($ci, CURLOPT_URL, $this->provider);
+                    curl_setopt($ci, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ci, CURLOPT_HTTPHEADER, array(
                         'Content-Type: application/json'
                     ));
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                    curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, 0);
 
                     $json_data = json_encode($data);
 
                     # Send the cURL request with the JSON-RPC request in the body
-                    curl_setopt($ch, CURLOPT_POST, true);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+                    curl_setopt($ci, CURLOPT_POST, true);
+                    curl_setopt($ci, CURLOPT_POSTFIELDS, $json_data);
 
-                    
+                    // set Proxy for the Request
+                    if( $this->proxy !== null){
+                        curl_setopt($ci, CURLOPT_PROXY, $this->proxy);
+                    }   
+        
                     //add the two handles
-                    curl_multi_add_handle($mh,$ch);
+                    curl_multi_add_handle($cmi,$ci);
                     
                     
-                    return $ch;
+                    return $ci;
                 },$logs);
             },$trxHashandIds);     
 
@@ -109,10 +121,10 @@ class topSellNfts{
             //execute the multi handle
             do {
                 
-               $status = curl_multi_exec($mh, $active);
+               $status = curl_multi_exec($cmi, $active);
                 if ($active) {
                     // Wait a short time for more activity
-                    curl_multi_select($mh);
+                    curl_multi_select($cmi);
                 }
                 sleep(2);
                 
@@ -132,8 +144,8 @@ class topSellNfts{
                         return $value;
                     }
 
-                    curl_multi_remove_handle($mh, $ch);
-                    curl_multi_close($mh);
+                    curl_multi_remove_handle($cmi, $ci);
+                    curl_multi_close($cmi);
 
                 },$logs);    
             },$filter);
