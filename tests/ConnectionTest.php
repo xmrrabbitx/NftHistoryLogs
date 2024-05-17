@@ -14,7 +14,7 @@ final class ConnectionTest extends TestCase{
      * 
      * @var string
      */
-    protected $testProvider = 'https://mainnet.infura.io/v3/b79cca560563453088d46d6812fdf531';
+    protected $testProvider = 'http://localhost:8545';
 
     /**
      * testContractAddress
