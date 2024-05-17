@@ -136,12 +136,6 @@ this library is tested on php version 8.1, to test it just try this command:
 docker-compose up
 ```
 
-### Phpunit Test
-You can test the library by using phpunit test:
-```php
-./vendor/bin/phpunit --testdox tests
-```
-
 ### contribution
 If you are interested in contributing to this project, I will be very glad ^__^
 
