@@ -47,16 +47,15 @@ class topSellNfts{
                 
             return array_map(function($logs) use($topSellNftsJson){
                         
-                        $data = $topSellNftsJson->getTopSellNftsJson($logs);
+                   $data = $topSellNftsJson->getTopSellNftsJson($logs);
                     
-                        $result = $this->exec->singleExec($data);
+                   $result = $this->exec->singleExec($data);
 
-                        if($result['value'] !== '0x0'){
+                   if($result['value'] !== '0x0'){
 
-                                   $logs = $result['value'];
-                                   return $logs;
+                         return $result['value'];
 
-                        }
+                   }
             },$log);
 
         },$trxHashandIds);
@@ -65,9 +64,7 @@ class topSellNfts{
 
                 $sum = array_sum(array_map('hexdec',$log));
                
-                $nftSumPrice = $weiToEther->getWeiToEther([$sum]);
-        
-                return $nftSumPrice;
+                return $weiToEther->getWeiToEther([$sum]);
 
         },$filterData);
 
