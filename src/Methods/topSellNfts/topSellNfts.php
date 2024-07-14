@@ -28,14 +28,13 @@ class topSellNfts{
 
     function getTopSellNfts($args){
 
-        if(empty($args) || $args === null){
-            $mode = 'singleThread';
-            $fromBlock = "0x0";
-            $toBlock = "latest";
+        if(!empty($args) || $args === null){
+            $mode = $args[0] ?? "singleThread";
+            $countRank = $args[1] ?? "10";
+            $fromBlock = $args[2] ?? "0x0";
+            $toBlock = $args[3] ?? "latest";
         }else{
-            $mode = $args[0];
-            $fromBlock = $args[1];
-            $toBlock = $args[2];
+            throw $this->Exception("empty fields!");
         }
 
         $trxHashandIdsClass = new allTransferTrxHashAndIds($this->contractAddress, $this->provider, $this->proxy);
@@ -166,14 +165,14 @@ class topSellNfts{
        
         arsort($result);
 
-        if(isset($args[1])){
 
-            $countRank = $args[1];
-            $result = array_slice($result,0,$countRank);
-            
-        }
-        
-       return $result;
+        return array_slice($result,0,$countRank);
+
  
+    }
+
+    private function Exception($string)
+    {
+        return $string;
     }
 }

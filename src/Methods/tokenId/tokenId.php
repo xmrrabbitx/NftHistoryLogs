@@ -10,7 +10,12 @@ class tokenId{
      */
     function getTokenId($args){
 
-        $topics = $args[0];
+
+        if(!empty($args)) {
+            $topics = $args[0];
+        }else{
+            throw $this->Exception("empty fields!");
+        }
 
         if(isset($topics[3])){
 
@@ -21,5 +26,10 @@ class tokenId{
             $tokenId = $decodedInputData;
             return $tokenId;
         }
+    }
+
+    private function Exception($string)
+    {
+        return $string;
     }
 }

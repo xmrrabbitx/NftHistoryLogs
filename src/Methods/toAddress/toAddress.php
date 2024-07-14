@@ -24,9 +24,13 @@ class toAddress{
      */
     function getToAddress($args){
 
-        $trxHash = $args[0];
-        if(isset($args[1])){
-            $eventName = $args[1];
+        if(!empty($args)) {
+            $trxHash = $args[0];
+            if(isset($args[1])){
+                $eventName = $args[1];
+            }
+        }else{
+            throw $this->Exception("empty fields!");
         }
 
         $toAddressJson = new toAddressJson();
@@ -60,6 +64,11 @@ class toAddress{
 
         return $resultTopics;
 
+    }
+
+    private function Exception($string)
+    {
+        return $string;
     }
 
    

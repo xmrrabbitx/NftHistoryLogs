@@ -25,7 +25,13 @@ class receiptByTrxHash{
      * Method to retreive information of a receipent transaction
      * @param $trxHash is the transaction hash in hex format
      */
-    function getReceiptByTrxHash($trxHash){
+    function getReceiptByTrxHash($args){
+
+        if(!empty($args)) {
+            $trxHash = $args;
+        }else{
+            throw $this->Exception("empty fields!");
+        }
 
         $receiptByTrxHashJson = new receiptByTrxHashJson();
         $data = $receiptByTrxHashJson->getReceiptByTrxHashJson($trxHash);
@@ -34,4 +40,10 @@ class receiptByTrxHash{
 
         return $result;
     }
+
+    private function Exception($string)
+    {
+        return $string;
+    }
+
 }

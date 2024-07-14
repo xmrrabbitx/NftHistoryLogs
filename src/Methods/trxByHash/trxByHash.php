@@ -28,7 +28,12 @@ class trxByHash{
      */
     function getTrxByHash($args){
 
-        $trxHash = $args[0];
+        if(!empty($args)){
+            $trxHash = $args[0];
+        }else{
+            throw $this->Exception("empty fields!");
+        }
+
         $trxByHash = new trxByHashJson($this->contractAddress);
         $data = $trxByHash->getTrxByHashJson($trxHash);
 
@@ -37,4 +42,10 @@ class trxByHash{
         return $result;
 
     }
+
+    private function Exception($string)
+    {
+        return $string;
+    }
+
 }

@@ -31,12 +31,11 @@ class allTransferTrxHashAndIds{
      */
     function getAllTransferTrxHashAndIds($args=null){
 
-        if(empty($args) || $args === null){
-            $fromBlock = "0x0";
-            $toBlock = "latest";
+        if(!empty($args) || $args === null){
+            $fromBlock = $args[0] ?? "0x0";
+            $toBlock = $args[1] ?? "latest";
         }else{
-          $fromBlock = $args[0];
-          $toBlock = $args[1];
+            throw $this->Exception("empty fields!");
         }
 
         $allTransferTrxHashByIdsJson = new allTransferTrxHashAndIdsJson($this->contractAddress);
@@ -60,5 +59,10 @@ class allTransferTrxHashAndIds{
         $result = $res;
         
         return $result;
+    }
+
+    private function Exception($string)
+    {
+        return $string;
     }
 }

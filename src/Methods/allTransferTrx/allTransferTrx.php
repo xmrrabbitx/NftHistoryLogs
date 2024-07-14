@@ -33,8 +33,12 @@ class allTransferTrx{
      */
     function getAllTransferTrx($args){
 
-        $fromBlock = $args[0];
-        $toBlock = $args[1];
+        if(!empty($args)) {
+            $fromBlock = $args[0] ?? "0x0";
+            $toBlock = $args[1] ?? "latest";
+        }else{
+            throw $this->Exception("empty fields!");
+        }
 
         $allTransferTrx = new allTransferTrxJson($this->contractAddress, $fromBlock, $toBlock);
         $data = $allTransferTrx->getAllTransferTrx();
@@ -42,5 +46,10 @@ class allTransferTrx{
         $result = $this->exec->singleExec($data);
         return $result;
 
+    }
+
+    private function Exception($string)
+    {
+        return $string;
     }
 }

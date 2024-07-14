@@ -34,9 +34,13 @@ class transferTrxById{
      */
     function getTransferTrxById($args){
 
-        $tokenId = $args[0];
-        $fromBlock = $args[1];
-        $toBlock = $args[2];
+        if(!empty($args)){
+            $tokenId = $args[0];
+            $fromBlock = $args[2] ?? "0x0";
+            $toBlock = $args[3] ?? "latest";
+        }else{
+            throw $this->Exception("empty fields!");
+        }
 
         $transferTrxByIdJson = new transferTrxByIdJson($this->contractAddress);
         $data = $transferTrxByIdJson->getTransferTrxByIdJson($tokenId, $fromBlock, $toBlock);
@@ -44,5 +48,10 @@ class transferTrxById{
         $result = $this->exec->singleExec($data);
         return $result;
 
+    }
+
+    private function Exception($string)
+    {
+        return $string;
     }
 }

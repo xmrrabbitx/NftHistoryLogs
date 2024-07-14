@@ -30,8 +30,12 @@ class allTrx{
      */
     public function getAllTrx($args){
 
-        $fromBlock = $args[0];
-        $toBlock = $args[1];
+        if(!empty($args)) {
+            $fromBlock = $args[0] ?? "0x0";
+            $toBlock = $args[1] ?? "latest";
+        }else{
+            throw $this->Exception("empty fields!");
+        }
 
         $allTrxJson = new allTrxJson($this->contractAddress);
         $data = $allTrxJson->getAllTrxJson($fromBlock, $toBlock);
@@ -41,6 +45,9 @@ class allTrx{
         
     }
 
-
+    private function Exception($string)
+    {
+        return $string;
+    }
 
 }

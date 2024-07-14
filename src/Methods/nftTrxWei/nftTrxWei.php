@@ -29,11 +29,16 @@ class nftTrxWei{
      */
     function getNftTrxWei($args){
 
-        $trxHash = $args[0];
-        
-        if(isset($args[1])){
-            $eventName = $args[1];
+        if(!empty($args)) {
+            $trxHash = $args[0];
+
+            if(isset($args[1])){
+                $eventName = $args[1];
+            }
+        }else{
+            throw $this->Exception("empty fields!");
         }
+
 
         $nftTrxWeiJson = new nftTrxWeiJson();
         $amount = $nftTrxWeiJson->getNftTrxWeiJson($trxHash);
@@ -116,5 +121,10 @@ class nftTrxWei{
    
        return $amountWei;
        
+    }
+
+    private function Exception($string)
+    {
+        return $string;
     }
 }

@@ -23,11 +23,16 @@ class fromAddress{
      */
     function getFromAddress($args){
 
-        $trxHash = $args[0];
-        if(isset($args[1])){
-            $eventName = $args[1];
+        if(!empty($args)) {
+            $trxHash = $args[0];
+            if(isset($args[1])){
+                $eventName = $args[1];
+            }
+        }else{
+            throw $this->Exception("empty fields!");
         }
-       
+
+
         $fromAddressJson = new fromAddressJson();
         $result = $fromAddressJson->getFromAddressJson($trxHash);
 
@@ -59,6 +64,11 @@ class fromAddress{
 
         return $resultTopics;
 
+    }
+
+    private function Exception($string)
+    {
+        return $string;
     }
 
 }
