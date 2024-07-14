@@ -18,15 +18,14 @@ class multiThreadExec{
     function multiExecInit(){
 
        //create the multiple cURL handle
-       $cmi = curl_multi_init();
-
-       return $cmi;
+       return curl_multi_init();
 
     }
 
-    function multiExecOpts($data){
+    function multiExecOpts($cmi, $data){
 
-        $cmi = $this->multiExecInit();
+        //$cmi = $this->multiExecInit();
+        $ch = curl_init();
 
         // set URL and other appropriate options
         curl_setopt($ch, CURLOPT_URL, $this->provider);
@@ -47,16 +46,44 @@ class multiThreadExec{
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
 
-        $aCurlHandles[$id] = $ch;
         //add the two handles
         curl_multi_add_handle($cmi,$ch); 
-        
+
+        return$ch;
     }     
 
-    function multiExec($cmi){
+    function multiExec($data){
 
-        
-        
+
+        $cmi = $this->multiExecInit();
+        $handles = [];
+
+        // Add handles to the multi cURL handle
+        foreach ($data as $datum) {
+            $handles[] = $this->multiExecOpts($cmi, $datum);
+        }
+
+        $running = null;
+        // Execute the multi handle
+        do {
+            $status = curl_multi_exec($cmi, $running);
+            if ($running) {
+                curl_multi_select($cmi);
+            }
+        } while ($running > 0);
+
+        // Collect responses
+        $responses = [];
+        foreach ($handles as $ch) {
+            $responses[] = curl_multi_getcontent($ch);
+            curl_multi_remove_handle($cmi, $ch);
+            curl_close($ch);
+        }
+
+        // Close the multi cURL handle
+        curl_multi_close($cmi);
+
+        return $responses;
        
     }
     

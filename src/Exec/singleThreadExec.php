@@ -39,10 +39,8 @@ class singleThreadExec{
         $response = curl_exec($ch);
         
         if (curl_errno($ch)) {
-            $error = curl_error($curl);
+            $error = curl_error($ch);
         }
-
-         //print_r($response);
 
         # error checking
         if (!empty($response)) {
@@ -57,8 +55,8 @@ class singleThreadExec{
         }
         
         # Parse the response to extract the transaction history
-        $history = json_decode($response, true)['result'];
+        return json_decode($response, true)['result'];
 
-        return $history;
+
     }
 }

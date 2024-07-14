@@ -76,7 +76,10 @@ class topSellNfts{
         }
 
         elseif($mode === "multiThread"){
- 
+
+          die('stopppp');
+
+            /*
             //create the multiple cURL handle
             $cmi = curl_multi_init();
 
@@ -159,6 +162,8 @@ class topSellNfts{
                 return $nftSumPrice;
         
             },$getValues);
+
+            */
 
         }
 
