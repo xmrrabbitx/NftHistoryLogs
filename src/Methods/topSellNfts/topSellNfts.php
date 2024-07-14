@@ -27,7 +27,6 @@ class topSellNfts{
     function getTopSellNfts($args){
 
         if(!empty($args) || $args === null){
-            $mode = $args[0] ?? "singleThread";
             $countRank = $args[1] ?? "10";
             $fromBlock = $args[2] ?? "0x0";
             $toBlock = $args[3] ?? "latest";
