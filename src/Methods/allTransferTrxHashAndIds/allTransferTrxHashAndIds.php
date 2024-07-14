@@ -31,7 +31,7 @@ class allTransferTrxHashAndIds{
      */
     function getAllTransferTrxHashAndIds($args=null){
 
-        if(!empty($args) || $args === null){
+        if(!empty($args)){
             $fromBlock = $args[0] ?? "0x0";
             $toBlock = $args[1] ?? "latest";
         }else{
