@@ -83,9 +83,9 @@ $NftHistory->receiptByTrxHash($trxHash);
 ```
 
 ### topSellNfts
-showing the top selling nfts to the lowest prices. you can set mode on "singleThread" and "multiThread". $mode must be string. singleThread is slower and request single by single and multiThread is a bulk request to server. be aware of rate limit of the destination server. $countRank is the numbers of the values you want to obtain. it is optional and must not exceed the numbers of tokens of an contract address. it must be in decimal format.
+showing the top selling nfts to the lowest prices. you can set mode on "singleThread" and "multiThread". $mode must be string. singleThread is slower and request single by single and multiThread is a bulk request to server. be aware of rate limit of the destination server. $countRank is the numbers of the values you want to obtain. it is optional and must not exceed the numbers of tokens of an contract address. it must be in decimal format. $fromBlock and $toBlock are optional.
 ```php
-$NftHistory->topSellNfts($mode, $countRank);
+$NftHistory->topSellNfts($mode, $countRank, $fromBlock, $toBlock);
 ```
 
 ### nftTrxWei
