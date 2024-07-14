@@ -3,7 +3,6 @@
 namespace Nft\History\Methods\topSellNfts;
 
 use Nft\History\Exec\singleThreadExec;
-use Nft\History\Exec\multiThreadExec;
 use Nft\History\Methods\eventSig\eventSig;
 use Nft\History\Methods\weiToEther\weiToEther;
 use Nft\History\Methods\trxByHash\trxByHash;
@@ -20,7 +19,6 @@ class topSellNfts{
         $this->proxy = $proxy;
         
         $this->exec = new singleThreadExec($contractAddress, $provider, $this->proxy);
-        $this->multi = new multiThreadExec($contractAddress, $provider, $this->proxy);
 
         $this->eventSig = new eventSig();
 
