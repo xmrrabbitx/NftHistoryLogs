@@ -36,8 +36,8 @@ class transferTrxById{
 
         if(!empty($args)){
             $tokenId = $args[0];
-            $fromBlock = $args[2] ?? "0x0";
-            $toBlock = $args[3] ?? "latest";
+            $fromBlock = $args[1] ?? "0x0";
+            $toBlock = $args[2] ?? "latest";
         }else{
             throw $this->Exception("empty fields!");
         }
